@@ -1,0 +1,1 @@
+cmd /k "C:\Program Files\nodejs\node.exe" nodejs_here.js
