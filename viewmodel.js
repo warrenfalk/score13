@@ -45,17 +45,17 @@ function ViewModel() {
 		(this.currentRound() ? this.currentRound().gameScore[1]() : 0),
 	];
 
-	this.gameScore = [
-		ko.computed(function() { return this.score(0); }, this),
-		ko.computed(function() { return this.score(1); }, this),
-	];
-
 	this.lastRound = ko.computed(function() {
 		var round = this.currentRound();
 		while (round && round.stage() != 'complete')
 			round = round.previousRound;
 		return round;
 	}, this);
+
+	this.gameScore = [
+		ko.computed(function() { return this.score(0); }, this),
+		ko.computed(function() { return this.score(1); }, this),
+	];
 
 	this.mode = ko.computed(function() {
 		if (!this.currentRound())
