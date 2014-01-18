@@ -1,0 +1,13 @@
+.teamScore {
+	display: inline-block;
+	font-size: 30px;
+	padding: 10px;
+	border: solid 1px blue;
+}
+
+.roundform .bids, .roundform .tricks {
+	display: inline-block;
+	font-size: 30px;
+	padding: 10px;
+	border: solid 1px gray;
+}

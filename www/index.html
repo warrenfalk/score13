@@ -20,6 +20,28 @@
                     </div>
                 </div>
             </div>
+            <div class="roundform">
+            	<div class="teambids">
+            		<div class="title">Bids</div>
+            		<!--ko foreach: $root.teams -->
+		            	<div class="bids" data-bind="css: teamid">
+		            		<button>+</button>
+		            		<div class="value" data-bind="text: '0'"></div>
+		            		<button>-</button>
+		            	</div>
+		            <!--/ko -->
+	            </div>
+	            <div class="teamtricks">
+	            	<div class="title">Tricks</div>
+            		<!--ko foreach: $root.teams -->
+		            	<div class="tricks" data-bind="css: teamid">
+		            		<button>+</button>
+		            		<div class="value" data-bind="text: '0'"></div>
+		            		<button>-</button>
+		            	</div>
+		            <!--/ko -->
+	            </div>
+            </div>
         </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/knockout-3.0.0.js"></script>

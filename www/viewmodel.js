@@ -1,3 +1,10 @@
+function Team(teamIndex) {
+	this.index = teamIndex;
+}
+Team.prototype.teamid = function() {
+	return 'team' + this.index;
+}
+
 function TeamScore(teamIndex) {
 	this.index = teamIndex;
 	this.bids = ko.observable(0); // TODO: track bids for each player?
@@ -43,6 +50,11 @@ function ViewModel() {
 	this.currentScore = [
 		(this.currentRound() ? this.currentRound().gameScore[0]() : 0),
 		(this.currentRound() ? this.currentRound().gameScore[1]() : 0),
+	];
+
+	this.teams = [
+		new Team(0),
+		new Team(1),
 	];
 
 	this.lastRound = ko.computed(function() {

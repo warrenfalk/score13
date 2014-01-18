@@ -1,0 +1,57 @@
+<?DOCTYPE html?>
+<html>
+<head>
+<style>
+* {
+    -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+button {
+	height: 30px;
+	width: 100%;
+	margin: 0;
+}
+iframe {
+	position: absolute;
+	border: none;
+	left: 0;
+	top: 30px;
+	width: 540px;
+	height: 960px;
+	background-color: #e9e9e9;
+}
+</style>
+</head>
+<body>
+<button id="b">resize</button>
+<iframe></iframe>
+<script>
+var button = document.getElementById("b");
+document.body.style.overflow = "hidden";
+function resizeViewPort(width, height) {
+    if (window.outerWidth) {
+        window.resizeTo(
+            width + (window.outerWidth - window.innerWidth),
+            height + (window.outerHeight - window.innerHeight)
+        );
+    } else {
+        window.resizeTo(500, 500);
+        window.resizeTo(
+            width + (500 - document.body.offsetWidth),
+            height + (500 - document.body.offsetHeight)
+        );
+    }
+}
+function resizewindow() {
+	resizeViewPort(540, 960 + button.offsetHeight);
+}
+button.addEventListener("click", resizewindow, false);
+window.addEventListener("load", resizewindow, false);
+</script>
+</body>
+</html>
