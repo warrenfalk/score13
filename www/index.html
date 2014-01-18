@@ -9,7 +9,7 @@
         <title>Score Keeper</title>
     </head>
     <body>
-        <div class="app">
+        <div id="app">
             <div class="lastRound">
                 <div class="roundScore">
                     <div class="teamScore team0">
@@ -20,26 +20,29 @@
                     </div>
                 </div>
             </div>
-            <div class="roundform">
+            <div data-bind="with: currentRound" class="roundform">
+                <div data-bind="text: JSON.stringify(roundScore)"></div>
+            </div>
+            <div data-bind="with: currentRound" class="roundform">
             	<div class="teambids">
             		<div class="title">Bids</div>
-            		<!--ko foreach: $root.teams -->
-		            	<div class="bids" data-bind="css: teamid">
-		            		<button>+</button>
-		            		<div class="value" data-bind="text: '0'"></div>
-		            		<button>-</button>
+            		<!-- ko foreach:roundScore -->
+		            	<div class="bids" data-bind="css: team.teamid">
+		            		<button class="increment" data-bind="click: incrementBid">+</button>
+		            		<div class="value" data-bind="text: bids"></div>
+		            		<button class="decrement" data-bind="click: decrementBid">-</button>
 		            	</div>
-		            <!--/ko -->
+		            <!-- /ko -->
 	            </div>
 	            <div class="teamtricks">
 	            	<div class="title">Tricks</div>
-            		<!--ko foreach: $root.teams -->
-		            	<div class="tricks" data-bind="css: teamid">
-		            		<button>+</button>
-		            		<div class="value" data-bind="text: '0'"></div>
-		            		<button>-</button>
+            		<!-- ko foreach: roundScore -->
+		            	<div class="tricks" data-bind="css: team.teamid">
+		            		<button class="increment" data-bind="click: incrementTricks">+</button>
+		            		<div class="value" data-bind="text: tricks"></div>
+		            		<button class="decrement" data-bind="click: decrementTricks">-</button>
 		            	</div>
-		            <!--/ko -->
+		            <!-- /ko -->
 	            </div>
             </div>
         </div>

@@ -1,12 +1,13 @@
 function Team(teamIndex) {
 	this.index = teamIndex;
 }
+
 Team.prototype.teamid = function() {
 	return 'team' + this.index;
-}
+};
 
-function TeamScore(teamIndex) {
-	this.index = teamIndex;
+function TeamScore(team) {
+	this.team = team;
 	this.bids = ko.observable(0); // TODO: track bids for each player?
 	this.tricks = ko.observable(0);
 	this.score = ko.computed(function() {
@@ -14,15 +15,18 @@ function TeamScore(teamIndex) {
 	}, this);
 }
 
-function Round(previousRound, onEnd) {
+function Round(teams, previousRound, onEnd) {
 	// what round number this is
 	this.number = (previousRound ? previousRound.number : 1);
+
+	// remember the teams
+	this.teams = teams;
 
 	// the previous round
 	this.previousRound = previousRound;
 
 	// an array of team score records for this round
-	this.roundScore = [new TeamScore(0), new TeamScore(1)]; 
+	this.roundScore = [new TeamScore(teams[0]), new TeamScore(teams[1])]; 
 
 	// an array of team total scores
 	this.gameScore = [
@@ -43,18 +47,31 @@ Round.prototype.endRound = function() {
 	this.stage('complete');
 	var onEnd = this.onEnd;
 	onEnd(this);
-}
+};
+
+TeamScore.prototype.incrementBid = function(team) {
+	this.bids(this.bids() + 1);
+};
+
+TeamScore.prototype.decrementBid = function(team) {
+	this.bids(this.bids() - 1);
+};
+
+TeamScore.prototype.incrementTricks = function(team) {
+	this.tricks(this.tricks() + 1);
+};
+
+TeamScore.prototype.decrementTricks = function(team) {
+	this.tricks(this.tricks() - 1);
+};
 
 function ViewModel() {
+	this.teams = [ new Team(0), new Team(1) ];
+
 	this.currentRound = ko.observable();
 	this.currentScore = [
 		(this.currentRound() ? this.currentRound().gameScore[0]() : 0),
 		(this.currentRound() ? this.currentRound().gameScore[1]() : 0),
-	];
-
-	this.teams = [
-		new Team(0),
-		new Team(1),
 	];
 
 	this.lastRound = ko.computed(function() {
@@ -85,11 +102,11 @@ ViewModel.prototype.score = function(teamIndex) {
 };
 
 ViewModel.prototype.onRoundEnd = function(round) {
-	var nextRound = new Round(round, this.onRoundEnd);
+	var nextRound = new Round(this.teams, round, this.onRoundEnd);
 	this.currentRound(nextRound);
 };
 
 ViewModel.prototype.newGame = function() {
-	var firstRound = new Round(null, this.onRoundEnd.bind(this));
+	var firstRound = new Round(this.teams, null, this.onRoundEnd.bind(this));
 	this.currentRound(firstRound);
 };
